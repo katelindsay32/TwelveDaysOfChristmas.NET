@@ -8,19 +8,10 @@ namespace TwelveDaysOfChristmas
 {
     public class InputValidator
     {
-        public int GetInput()
+        private readonly IConsole console;
+        public InputValidator(IConsole c)
         {
-            Console.WriteLine("What day is it?");
-            bool isValidInput = false;
-            string input = string.Empty;
-
-            while (!isValidInput)
-            {
-                input = Console.ReadLine();
-                isValidInput = IsValid(input);
-            }
-
-            return Convert.ToInt32(input);
+            console = c;
         }
 
         public bool IsValid(string input)
@@ -31,13 +22,13 @@ namespace TwelveDaysOfChristmas
 
             if(!canParse)
             {
-                Console.WriteLine("Please enter a number");
+                console.WriteLine(Constants.Error_PleaseEnterNumber);
                 return canParse;
             }
 
             if (dayOfChristmas  < 1 || dayOfChristmas > 12)
             {
-                Console.WriteLine("Please enter a number between 1 and 12");
+                console.WriteLine(Constants.Error_PleaseEnterRange);
                 return false;
             }
 

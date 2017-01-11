@@ -39,5 +39,8 @@ namespace TwelveDaysOfChristmas
             { 11, "th" },
             { 12, "th" }
         };
+
+        public static string Error_PleaseEnterNumber = "Please enter a number";
+        public static string Error_PleaseEnterRange = "Please enter a number between 1 and 12";
     }
 }

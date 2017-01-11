@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 
 namespace TwelveDaysOfChristmas
 {
@@ -11,11 +12,13 @@ namespace TwelveDaysOfChristmas
     public class GiftCalculatorTest
     {
         private GiftCalculator giftCalculator;
+        private Mock<IConsole> console;
 
         [TestInitialize]
         public void Setup()
         {
-            giftCalculator = new GiftCalculator();
+            console = new Mock<IConsole>();
+            giftCalculator = new GiftCalculator(console.Object);
         }
 
         [TestMethod]
@@ -23,6 +26,8 @@ namespace TwelveDaysOfChristmas
         {
             int gifts = giftCalculator.CalculateGiftCount(1, 0);
             Assert.AreEqual(1, gifts);
+            console.Verify(f => f.WriteLine(It.IsAny<string>()), Times.Exactly(2));
+            console.Verify(f => f.WriteLine(It.Is<string>(r => r.Contains("my true love gave to me"))), Times.Once());
         }
 
         [TestMethod]
@@ -30,6 +35,7 @@ namespace TwelveDaysOfChristmas
         {
             int gifts = giftCalculator.CalculateGiftCount(2, 0);
             Assert.AreEqual(4, gifts);
+            console.Verify(f => f.WriteLine(It.IsAny<string>()), Times.Exactly(4));
         }
 
         [TestMethod]
